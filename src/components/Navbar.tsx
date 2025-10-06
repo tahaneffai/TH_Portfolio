@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import ThemeToggle from './ThemeToggle';
 import { Home as HomeIcon, User, Wrench, Folder, Calendar, Trophy, Mail } from 'lucide-react';
@@ -55,32 +56,50 @@ export default function Navbar() {
   }, []);
 
   return (
-    <header
+    <motion.header
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-        scrolled ? 'glass border-b border-white/10 py-2 shadow-md' : 'glass py-4'
+        'fixed top-0 left-0 right-0 z-50 transition-all duration-500',
+        scrolled 
+          ? 'glass border-b border-white/10 py-3 shadow-xl backdrop-blur-xl' 
+          : 'glass py-6 backdrop-blur-xl'
       )}
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
     >
       <div className="max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between">
-        <Link href="/" className="text-xl font-extrabold text-gradient-primary tracking-wide">
-          TN.
-        </Link>
+        <motion.div
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <Link 
+            href="/" 
+            className="text-3xl font-extrabold text-gradient-primary tracking-wide hover:scale-105 transition-transform duration-300"
+          >
+            TN.
+          </Link>
+        </motion.div>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-6">
-          <ul className="flex items-center space-x-6">
-            {navLinks.map((link) => {
+        <nav className="hidden md:flex items-center space-x-2">
+          <ul className="flex items-center space-x-2 list-none">
+            {navLinks.map((link, index) => {
               const sectionKey = link.href === '#' ? 'home': link.href.slice(1);
               const isActive = active === sectionKey;
               return (
-                <li key={link.label}>
+                <motion.li 
+                  key={link.label}
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1, duration: 0.4 }}
+                >
                   <Link
                     href={link.href}
                     className={cn(
-                      'group inline-flex items-center gap-2 px-4 h-9 rounded-full text-sm font-medium tracking-wide text-base-content/80 transition-colors',
+                      'group inline-flex items-center gap-2 px-4 h-10 rounded-2xl text-sm font-medium tracking-wide transition-all duration-300',
                       isActive
-                        ? 'text-primary bg-primary/12 ring-1 ring-primary/20'
-                        : 'hover:bg-primary/10 hover:text-primary'
+                        ? 'text-white bg-gradient-to-r from-teal-500 to-cyan-500 shadow-lg shadow-teal-500/25'
+                        : 'text-foreground/80 hover:text-foreground hover:bg-white/10 dark:hover:bg-white/5'
                     )}
                     aria-label={link.label}
                     aria-current={isActive ? 'page' : undefined}
@@ -88,24 +107,35 @@ export default function Navbar() {
                   >
                     <span className="inline-flex items-center gap-2">
                       {link.Icon && (
-                        <link.Icon className="h-4 w-4 opacity-80 group-hover:opacity-100 transition-opacity" />
+                        <link.Icon className="h-4 w-4 transition-all duration-300 group-hover:scale-110" />
                       )}
-                      <span>{link.label}</span>
+                      <span className="transition-all duration-300">{link.label}</span>
                     </span>
                   </Link>
-                </li>
+                </motion.li>
               );
             })}
           </ul>
-          <ThemeToggle />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.5, duration: 0.4 }}
+          >
+            <ThemeToggle />
+          </motion.div>
         </nav>
 
-        {/* Mobile Navigation (no menu button as requested) */}
+        {/* Mobile Navigation */}
         <div className="flex items-center md:hidden">
-          <ThemeToggle />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.3, duration: 0.4 }}
+          >
+            <ThemeToggle />
+          </motion.div>
         </div>
       </div>
-
-    </header>
+    </motion.header>
   );
 }

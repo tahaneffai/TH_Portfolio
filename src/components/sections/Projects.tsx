@@ -31,7 +31,7 @@ const projects: Project[] = [
   {
     title: 'Taxi OBC (On-Board Computer) System',
     description:
-      'Designed and implemented an intelligent embedded system for taxi vehicles, integrating real-time route tracking, automated fare computation, and telematics data acquisition. The system supports seamless communication between sensors, GPS modules, and a central management server, ensuring accurate trip monitoring and efficient fleet management. Built with a focus on reliability, low-latency data exchange, and modular hardware-software integration.',
+      'Designed and implemented an intelligent embedded system for taxi vehicles, integrating real-time route tracking, automated fare computation, and telematics data acquisition. The system supports seamless communication between sensors, GPS modules, and a central management server, ensuring accurate trip monitoring and efficient fleet management.',
     stack: ['Embedded', 'C/C++', 'Hardware', 'UI'],
     images: ['/projects/obc.PNG', '/projects/obc1.PNG', '/projects/obc2.PNG', '/projects/obc3.PNG'],
     liveUrl: '/projects/EMFDJNAGO.mp4',
@@ -49,6 +49,15 @@ const projects: Project[] = [
     githubUrl: '#',
   },
   {
+    title: 'TrainSight - Tanger Station AR',
+    description:
+      'Immersive AR mobile app enhancing traveler experience at Tanger Station , By pointing the camera, users see live train schedules, platforms, and directions to services like cafés or ticket counters directly in the real world making navigation intuitive and futuristic..',
+    stack: ['Flutter', 'Dart', 'Unity 3D','ARCore', 'Node.js', 'Express', 'PostgreSQL', 'Google Maps API'],
+    images: ['/projects/ra.PNG', '/projects/ra1.PNG', '/projects/ra2.PNG'],
+    liveUrl: '#',
+    githubUrl: '#',
+  },
+  {
     title: 'Cleaning Business Dashboard',
     description:
       'Interactive dashboard for cleaning business operations, scheduling, and client management.',
@@ -63,24 +72,6 @@ const projects: Project[] = [
       'Educational game teaching HTML basics through interactive building challenges.',
     stack: ['Unity', 'C#', 'WebGL'],
     images: ['/projects/html-builder.jpg'],
-    liveUrl: '#',
-    githubUrl: '#',
-  },
-  {
-    title: 'Data Analytics Toolkit',
-    description:
-      'Suite of data visualization and analysis tools for business intelligence.',
-    stack: ['Power BI', 'DAX', 'SQL', 'Excel'],
-    images: ['/projects/data-analytics.jpg'],
-    liveUrl: '#',
-    githubUrl: '#',
-  },
-  {
-    title: 'Mini AI Assistant',
-    description:
-      'Conversational AI assistant for answering questions and providing information.',
-    stack: ['React', 'OpenAI API', 'Node.js', 'Express'],
-    images: ['/projects/ai-assistant.jpg'],
     liveUrl: '#',
     githubUrl: '#',
   },
@@ -132,46 +123,52 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         <p className="text-gray-600 dark:text-gray-300 mb-4 text-sm">
           {project.description}
         </p>
-        <div className="flex flex-wrap gap-2 mb-4">
+        <div className="flex flex-wrap gap-2 mb-6">
           {project.stack.map((tech) => (
             <span
               key={tech}
-              className="px-2 py-1 bg-primary/10 text-primary rounded-full text-xs"
+              className="px-3 py-1.5 bg-gradient-to-r from-teal-500/10 to-cyan-500/10 text-teal-600 dark:text-teal-400 rounded-full text-xs font-medium border border-teal-500/20"
             >
               {tech}
             </span>
           ))}
         </div>
-        <div className="flex justify-between">
-          <a
+        <div className="flex flex-wrap gap-3 justify-between">
+          <motion.a
             href={project.liveUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn-outline btn-sm"
+            className="btn btn-primary btn-sm group"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
-            <ExternalLink size={14} />
+            <ExternalLink size={16} className="group-hover:rotate-12 transition-transform duration-300" />
             Live Demo
-          </a>
+          </motion.a>
           {project.demo && (
-            <button
+            <motion.button
               type="button"
               onClick={() => { setIsDemoOpen(true); setDemoError(false); }}
-              className="btn btn-outline btn-sm"
+              className="btn btn-ghost btn-sm group"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               aria-label={`Open ${project.title} demo`}
             >
-              <Play size={14} />
+              <Play size={16} className="group-hover:scale-110 transition-transform duration-300" />
               Demo
-            </button>
+            </motion.button>
           )}
-          <a
+          <motion.a
             href={project.githubUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn-outline btn-sm"
+            className="btn btn-ghost btn-sm group"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
-            <Github size={14} />
+            <Github size={16} className="group-hover:rotate-12 transition-transform duration-300" />
             GitHub
-          </a>
+          </motion.a>
         </div>
       </div>
       {isDemoOpen && project.demo && (
@@ -231,23 +228,66 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
 }
 
 export default function Projects() {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 24 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6 },
+    },
+  };
+
   return (
     <Section id="projects" className="bg-soft-gradient">
-      <motion.h2 
-        className="text-3xl font-bold mb-12 text-center text-gradient-primary"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        viewport={{ once: true }}
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        className="text-center mb-16"
       >
-        Projects
-      </motion.h2>
+        <motion.h2 
+          className="text-4xl md:text-5xl font-bold mb-6 text-gradient-primary tracking-tight"
+          variants={itemVariants}
+        >
+          Featured Projects
+        </motion.h2>
+        
+        <motion.p 
+          className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed text-balance"
+          variants={itemVariants}
+        >
+          A collection of projects that showcase my skills in full-stack development, embedded systems, and user experience design.
+        </motion.p>
+      </motion.div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <motion.div 
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-50px" }}
+      >
         {projects.map((project, index) => (
-          <ProjectCard key={`${project.title}-${index}`} project={project} index={index} />
+          <motion.div
+            key={`${project.title}-${index}`}
+            variants={itemVariants}
+          >
+            <ProjectCard project={project} index={index} />
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </Section>
   );
 }

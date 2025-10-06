@@ -1,107 +1,286 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @reference "tailwindcss";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Tailwind v4 design tokens */
+/* Tailwind v4 design tokens with teal gradient theme */
 @theme {
-  --color-primary: #6C63FF;
-  --color-secondary: #EAEAEA;
-  --color-accent: #F1C40F;
+  --color-primary: #14B8A6;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #f8fafc;
+  --color-secondary-foreground: #0f172a;
+  --color-accent: #06B6D4;
+  --color-accent-foreground: #ffffff;
+  --color-muted: #f1f5f9;
+  --color-muted-foreground: #64748b;
+  --color-background: #ffffff;
+  --color-foreground: #0f172a;
+  --color-card: #ffffff;
+  --color-card-foreground: #0f172a;
+  --color-border: #e2e8f0;
+  --color-input: #e2e8f0;
+  --color-ring: #14B8A6;
 }
 
 :root {
+  /* Teal gradient theme colors */
   --background: #ffffff;
-  --foreground: #171717;
-  --primary: #6C63FF;
-  --secondary: #EAEAEA;
-  --accent: #F1C40F;
-  --gradient-start: 108, 99, 255; /* primary */
-  --gradient-end: 241, 196, 15;   /* accent */
+  --foreground: #0f172a;
+  --primary: #14B8A6;
+  --primary-foreground: #ffffff;
+  --secondary: #f8fafc;
+  --secondary-foreground: #0f172a;
+  --accent: #06B6D4;
+  --accent-foreground: #ffffff;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: #14B8A6;
+  
+  /* Teal gradient variables */
+  --gradient-start: 20, 184, 166; /* #14B8A6 */
+  --gradient-mid: 6, 182, 212;    /* #06B6D4 */
+  --gradient-end: 14, 165, 233;   /* #0EA5E9 */
+  
+  /* Glassmorphism variables */
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-backdrop: blur(24px);
 }
 
 .dark {
   --background: #0a0a0a;
-  --foreground: #ededed;
-  --secondary: #2d2d2d;
-  /* Update secondary token in dark mode */
-  --color-secondary: #2d2d2d;
+  --foreground: #f8fafc;
+  --primary: #14B8A6;
+  --primary-foreground: #ffffff;
+  --secondary: #1e293b;
+  --secondary-foreground: #f8fafc;
+  --accent: #06B6D4;
+  --accent-foreground: #ffffff;
+  --muted: #1e293b;
+  --muted-foreground: #94a3b8;
+  --card: #0f172a;
+  --card-foreground: #f8fafc;
+  --border: #1e293b;
+  --input: #1e293b;
+  --ring: #14B8A6;
+  
+  /* Dark mode glassmorphism */
+  --glass-bg: rgba(15, 23, 42, 0.4);
+  --glass-border: rgba(255, 255, 255, 0.1);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: 'Poppins', sans-serif;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  font-variation-settings: normal;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 @layer components {
+  /* Modern glassmorphism with teal theme */
   .glass {
-    @apply bg-white/10 dark:bg-black/20 backdrop-blur-xl border border-white/10;
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-backdrop);
+    -webkit-backdrop-filter: var(--glass-backdrop);
+    border: 1px solid var(--glass-border);
   }
 
-  /* Elegant glassmorphism card */
+  /* Enhanced glassmorphism card */
   .card {
-    @apply rounded-2xl border shadow-md transition-all;
-    @apply border-white/20 dark:border-white/10;
-    @apply bg-white/60 dark:bg-white/5 backdrop-blur-xl;
+    @apply rounded-2xl border shadow-lg transition-all duration-300;
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-backdrop);
+    -webkit-backdrop-filter: var(--glass-backdrop);
+    border: 1px solid var(--glass-border);
   }
 
-  /* Subtle hover lift and glow for cards */
+  /* Modern hover effects */
   .hover-lift {
-    @apply transition-transform duration-200 ease-out hover:-translate-y-1 hover:scale-[1.01];
+    @apply transition-all duration-300 ease-out;
+  }
+  .hover-lift:hover {
+    @apply -translate-y-1 scale-[1.02];
+    box-shadow: 0 20px 40px rgba(20, 184, 166, 0.15), 0 8px 16px rgba(0, 0, 0, 0.1);
   }
 
   .hover-glow {
-    transition: box-shadow 200ms ease-out;
+    transition: all 300ms ease-out;
   }
   .hover-glow:hover {
-    box-shadow: 0 10px 25px rgba(108, 99, 255, 0.15), 0 6px 12px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 20px 40px rgba(20, 184, 166, 0.2), 0 8px 16px rgba(0, 0, 0, 0.1);
   }
 
-  /* Button system */
+  /* Modern button system with teal gradient */
   .btn {
-    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-2xl font-medium transition-all;
-    @apply focus:outline-none focus:ring-2;
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl font-medium transition-all duration-300;
+    @apply focus:outline-none focus:ring-2 focus:ring-offset-2;
     @apply disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply tracking-tight;
   }
-  .btn-sm { @apply px-3 py-1.5 text-sm rounded-xl; }
-  .btn-lg { @apply px-6 py-3 text-base; }
+  .btn-sm { @apply px-4 py-2 text-sm rounded-xl; }
+  .btn-lg { @apply px-8 py-4 text-lg rounded-2xl; }
 
+  /* Primary gradient button */
   .btn-primary {
-    @apply bg-primary text-white hover:bg-primary/90 focus:ring-primary shadow-sm;
+    background: linear-gradient(135deg, #14B8A6 0%, #06B6D4 50%, #0EA5E9 100%);
+    @apply text-white shadow-lg;
+    @apply hover:-translate-y-0.5 hover:scale-[1.02] hover:shadow-xl;
+    @apply focus:ring-cyan-300/60 focus:ring-offset-2;
+    @apply active:scale-100;
   }
-  .btn-secondary {
-    @apply bg-secondary/30 dark:bg-secondary/20 hover:bg-secondary/50 dark:hover:bg-secondary/30;
-  }
-  .btn-accent {
-    @apply bg-accent/20 text-accent hover:bg-accent/30 focus:ring-accent;
-  }
-  .btn-outline {
-    @apply border border-primary/30 text-primary hover:bg-primary/10 focus:ring-primary;
-  }
+
+  /* Ghost/Outline button */
   .btn-ghost {
-    @apply bg-transparent hover:bg-gray-200 dark:hover:bg-gray-800;
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-backdrop);
+    -webkit-backdrop-filter: var(--glass-backdrop);
+    border: 1px solid var(--glass-border);
+    @apply text-foreground;
+    @apply hover:bg-white/15 dark:hover:bg-white/10;
+    @apply focus:ring-cyan-300/60 focus:ring-offset-2;
   }
+
+  .btn-secondary {
+    @apply bg-secondary text-secondary-foreground;
+    @apply hover:bg-secondary/80;
+    @apply focus:ring-primary/60;
+  }
+
+  .btn-outline {
+    @apply border border-primary/30 text-primary;
+    @apply hover:bg-primary/10 hover:border-primary/50;
+    @apply focus:ring-primary/60;
+  }
+
   .btn-icon {
-    @apply inline-flex items-center justify-center p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-primary;
+    @apply inline-flex items-center justify-center p-3 rounded-full;
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-backdrop);
+    -webkit-backdrop-filter: var(--glass-backdrop);
+    border: 1px solid var(--glass-border);
+    @apply hover:bg-white/15 dark:hover:bg-white/10;
+    @apply focus:outline-none focus:ring-2 focus:ring-primary/60 focus:ring-offset-2;
   }
 }
 
 @layer utilities {
-  /* Soft ambient gradient background, inspired by Apple/Vercel aesthetics */
+  /* Modern teal gradient background */
   .bg-soft-gradient {
-    background-color: var(--background);
-    background-image:
-      radial-gradient(1000px circle at 20% 10%, rgba(var(--gradient-start), 0.12), transparent 40%),
-      radial-gradient(900px circle at 80% 90%, rgba(var(--gradient-end), 0.10), transparent 45%);
+    background: linear-gradient(135deg, 
+      rgba(20, 184, 166, 0.05) 0%, 
+      rgba(6, 182, 212, 0.08) 50%, 
+      rgba(14, 165, 233, 0.05) 100%);
+    background-attachment: fixed;
   }
 
-  /* Gradient text utility for headings */
+  /* Teal gradient text for headings */
   .text-gradient-primary {
-    background-image: linear-gradient(120deg, rgba(var(--gradient-start), 1), rgba(var(--gradient-end), 1));
+    background: linear-gradient(135deg, #14B8A6 0%, #06B6D4 50%, #0EA5E9 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Enhanced typography utilities */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  /* Animation utilities */
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.6s ease-out forwards;
+  }
+
+  .animate-stagger {
+    animation-delay: calc(var(--stagger) * 100ms);
+  }
+
+  /* Parallax utilities */
+  .parallax-slow {
+    transform: translateZ(0);
+    will-change: transform;
+  }
+
+  .parallax-fast {
+    transform: translateZ(0);
+    will-change: transform;
+  }
+}
+
+/* Keyframe animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Focus styles for accessibility */
+*:focus-visible {
+  outline: 2px solid #14B8A6;
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --glass-bg: rgba(255, 255, 255, 0.2);
+    --glass-border: rgba(0, 0, 0, 0.3);
+  }
+  
+  .dark {
+    --glass-bg: rgba(0, 0, 0, 0.6);
+    --glass-border: rgba(255, 255, 255, 0.3);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
