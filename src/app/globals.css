@@ -1,26 +1,107 @@
-@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@reference "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Tailwind v4 design tokens */
+@theme {
+  --color-primary: #6C63FF;
+  --color-secondary: #EAEAEA;
+  --color-accent: #F1C40F;
+}
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --primary: #6C63FF;
+  --secondary: #EAEAEA;
+  --accent: #F1C40F;
+  --gradient-start: 108, 99, 255; /* primary */
+  --gradient-end: 241, 196, 15;   /* accent */
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --secondary: #2d2d2d;
+  /* Update secondary token in dark mode */
+  --color-secondary: #2d2d2d;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Poppins', sans-serif;
+}
+
+@layer components {
+  .glass {
+    @apply bg-white/10 dark:bg-black/20 backdrop-blur-xl border border-white/10;
+  }
+
+  /* Elegant glassmorphism card */
+  .card {
+    @apply rounded-2xl border shadow-md transition-all;
+    @apply border-white/20 dark:border-white/10;
+    @apply bg-white/60 dark:bg-white/5 backdrop-blur-xl;
+  }
+
+  /* Subtle hover lift and glow for cards */
+  .hover-lift {
+    @apply transition-transform duration-200 ease-out hover:-translate-y-1 hover:scale-[1.01];
+  }
+
+  .hover-glow {
+    transition: box-shadow 200ms ease-out;
+  }
+  .hover-glow:hover {
+    box-shadow: 0 10px 25px rgba(108, 99, 255, 0.15), 0 6px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  /* Button system */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-2xl font-medium transition-all;
+    @apply focus:outline-none focus:ring-2;
+    @apply disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn-sm { @apply px-3 py-1.5 text-sm rounded-xl; }
+  .btn-lg { @apply px-6 py-3 text-base; }
+
+  .btn-primary {
+    @apply bg-primary text-white hover:bg-primary/90 focus:ring-primary shadow-sm;
+  }
+  .btn-secondary {
+    @apply bg-secondary/30 dark:bg-secondary/20 hover:bg-secondary/50 dark:hover:bg-secondary/30;
+  }
+  .btn-accent {
+    @apply bg-accent/20 text-accent hover:bg-accent/30 focus:ring-accent;
+  }
+  .btn-outline {
+    @apply border border-primary/30 text-primary hover:bg-primary/10 focus:ring-primary;
+  }
+  .btn-ghost {
+    @apply bg-transparent hover:bg-gray-200 dark:hover:bg-gray-800;
+  }
+  .btn-icon {
+    @apply inline-flex items-center justify-center p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-primary;
+  }
+}
+
+@layer utilities {
+  /* Soft ambient gradient background, inspired by Apple/Vercel aesthetics */
+  .bg-soft-gradient {
+    background-color: var(--background);
+    background-image:
+      radial-gradient(1000px circle at 20% 10%, rgba(var(--gradient-start), 0.12), transparent 40%),
+      radial-gradient(900px circle at 80% 90%, rgba(var(--gradient-end), 0.10), transparent 45%);
+  }
+
+  /* Gradient text utility for headings */
+  .text-gradient-primary {
+    background-image: linear-gradient(120deg, rgba(var(--gradient-start), 1), rgba(var(--gradient-end), 1));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
 }
