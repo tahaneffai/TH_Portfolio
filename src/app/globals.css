@@ -130,16 +130,27 @@ body {
   .btn-sm { @apply px-4 py-2 text-sm rounded-xl; }
   .btn-lg { @apply px-8 py-4 text-lg rounded-2xl; }
 
-  /* Primary gradient button */
+  /* Enhanced Primary gradient button */
   .btn-primary {
     background: linear-gradient(135deg, #14B8A6 0%, #06B6D4 50%, #0EA5E9 100%);
     @apply text-white shadow-lg;
     @apply hover:-translate-y-0.5 hover:scale-[1.02] hover:shadow-xl;
     @apply focus:ring-cyan-300/60 focus:ring-offset-2;
     @apply active:scale-100;
+    box-shadow: 0 10px 25px -5px rgba(20, 184, 166, 0.25), 0 4px 6px -2px rgba(6, 182, 212, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  /* Ghost/Outline button */
+  .btn-primary:hover {
+    box-shadow: 0 20px 40px -10px rgba(20, 184, 166, 0.3), 0 8px 16px -4px rgba(6, 182, 212, 0.15);
+    transform: translateY(-2px) scale(1.02);
+  }
+
+  .btn-primary:active {
+    transform: translateY(0) scale(1);
+  }
+
+  /* Enhanced Ghost/Outline button */
   .btn-ghost {
     background: var(--glass-bg);
     backdrop-filter: var(--glass-backdrop);
@@ -147,7 +158,20 @@ body {
     border: 1px solid var(--glass-border);
     @apply text-foreground;
     @apply hover:bg-white/15 dark:hover:bg-white/10;
+    @apply hover:-translate-y-0.5 hover:scale-[1.02];
     @apply focus:ring-cyan-300/60 focus:ring-offset-2;
+    @apply active:scale-100;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  .dark .btn-ghost:hover {
+    background: rgba(0, 0, 0, 0.6);
   }
 
   .btn-secondary {
@@ -273,6 +297,49 @@ html {
   }
 }
 
+/* Netflix-style Loader Styles */
+.netflix-loader {
+  background: #000000;
+  overflow: hidden;
+}
+
+.netflix-bar {
+  will-change: transform, opacity;
+  transform-origin: center;
+}
+
+.netflix-sweep {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
+  filter: blur(1px);
+}
+
+.netflix-bloom {
+  filter: brightness(1.5) saturate(1.3) blur(0.5px);
+}
+
+/* Netflix Loader Styles */
+.netflix-oblong-bar {
+  height: 12px;
+  border-radius: 6px;
+  will-change: transform, opacity;
+  transform-origin: center;
+}
+
+/* Enhanced Focus States */
+.btn:focus-visible {
+  @apply ring-2 ring-offset-2 ring-cyan-300/60;
+  outline: none;
+}
+
+/* Premium Hover Effects */
+.btn:hover {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn:active {
+  transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -282,5 +349,9 @@ html {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+  
+  .loading-gradient {
+    animation: none;
   }
 }

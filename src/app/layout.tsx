@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins, Inter } from "next/font/google";
 import "./globals.css";
+import SimpleLoaderProvider from "@/components/SimpleLoaderProvider";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -52,9 +53,11 @@ export default function RootLayout({
       <body
         className={`${poppins.variable} ${inter.variable} font-sans antialiased`}
       >
-        <div className="min-h-screen flex flex-col">
-          {children}
-        </div>
+        <SimpleLoaderProvider>
+          <div className="min-h-screen flex flex-col">
+            {children}
+          </div>
+        </SimpleLoaderProvider>
       </body>
     </html>
   );

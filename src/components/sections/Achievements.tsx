@@ -1,33 +1,29 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Award } from 'lucide-react';
+import { Award, Palette, Video, Smartphone, Instagram } from 'lucide-react';
 import Section from '../ui/Section';
 
 const achievements = [
   {
-    title: 'Azure Fundamentals (AZ-900)',
-    issuer: 'Microsoft',
-    date: '2023',
-    icon: <Award className="h-5 w-5 text-accent" />
+    title: 'Flyer Design & Branding',
+    description: 'Created visually appealing flyers and event posters with modern layouts and color harmony.',
+    icon: <Palette className="h-6 w-6" />
   },
   {
-    title: 'Google Data Analytics',
-    issuer: 'Google',
-    date: '2023',
-    icon: <Award className="h-5 w-5 text-accent" />
+    title: 'Video Editing',
+    description: 'Produced and edited short promotional videos with smooth transitions and synced soundtracks.',
+    icon: <Video className="h-6 w-6" />
   },
   {
-    title: 'Scrum Basics',
-    issuer: 'Scrum.org',
-    date: '2022',
-    icon: <Award className="h-5 w-5 text-accent" />
+    title: 'UI/UX Design',
+    description: 'Designed clean mobile and web interfaces using Figma and modern design principles.',
+    icon: <Smartphone className="h-6 w-6" />
   },
   {
-    title: 'Cisco Networking Intro',
-    issuer: 'Cisco',
-    date: '2022',
-    icon: <Award className="h-5 w-5 text-accent" />
+    title: 'Creative Visuals for Social Media',
+    description: 'Built cohesive design themes and templates for online campaigns.',
+    icon: <Instagram className="h-6 w-6" />
   }
 ];
 
@@ -41,30 +37,61 @@ export default function Achievements() {
         transition={{ duration: 0.5 }}
         viewport={{ once: true }}
       >
-        Achievements & Certifications
+        Versatility & Skills Beyond Code
       </motion.h2>
       
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {achievements.map((achievement, index) => (
           <motion.div
             key={achievement.title}
-            className="card hover-lift hover-glow p-6"
+            className="group relative overflow-hidden rounded-2xl bg-white/80 dark:bg-neutral-900/40 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-lg hover:shadow-xl transition-all duration-300"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
             viewport={{ once: true }}
-            whileHover={{ y: -6, scale: 1.015 }}
+            whileHover={{ 
+              y: -8, 
+              scale: 1.02,
+              transition: { duration: 0.3, ease: "easeOut" }
+            }}
           >
-            <div className="flex items-center mb-4">
-              <div className="p-2 bg-primary/10 rounded-full mr-3">
+            {/* Teal Gradient Overlay on Hover */}
+            <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            
+            {/* Content */}
+            <div className="relative p-6">
+              {/* Icon */}
+              <motion.div 
+                className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-500 text-white shadow-lg mb-4"
+                whileHover={{ 
+                  scale: 1.1, 
+                  rotate: 5,
+                  transition: { duration: 0.2 }
+                }}
+              >
                 {achievement.icon}
-              </div>
-              <h3 className="font-semibold">{achievement.title}</h3>
+              </motion.div>
+              
+              {/* Title */}
+              <h3 className="text-lg font-semibold mb-3 text-foreground group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors duration-300">
+                {achievement.title}
+              </h3>
+              
+              {/* Description */}
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                {achievement.description}
+              </p>
+              
+              {/* Decorative Line */}
+              <motion.div 
+                className="mt-4 w-8 h-0.5 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full"
+                whileHover={{ width: "2rem" }}
+                transition={{ duration: 0.3 }}
+              />
             </div>
-            <div className="text-sm text-gray-600 dark:text-gray-300">
-              <p>{achievement.issuer}</p>
-              <p>{achievement.date}</p>
-            </div>
+            
+            {/* Subtle Glow Effect */}
+            <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-teal-500/5 to-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           </motion.div>
         ))}
       </div>

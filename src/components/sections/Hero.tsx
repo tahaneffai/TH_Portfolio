@@ -163,7 +163,7 @@ export default function Hero() {
               variants={itemVariants}
             >
               <motion.a
-                href="/cv.pdf"
+                href="/cv-fr.pdf"
                 className="btn btn-primary btn-lg group"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
