@@ -3,8 +3,7 @@
 import { useEffect, useState } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
-import { ArrowDown, Download, Code, Database, Server, Cpu, Sparkles } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { ArrowDown, Download, Sparkles } from 'lucide-react';
 
 export default function Hero() {
   const [displayText, setDisplayText] = useState('');
@@ -37,7 +36,7 @@ export default function Hero() {
     }, 3000);
     
     return () => clearInterval(loopInterval);
-  }, []);
+  }, [loopTexts.length]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -56,30 +55,20 @@ export default function Hero() {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: "easeOut" },
+      transition: { duration: 0.6, ease: "easeOut" as const },
     },
   };
 
-  const floatingVariants = {
-    animate: {
-      y: [-10, 10, -10],
-      transition: {
-        duration: 6,
-        repeat: Infinity,
-        ease: "easeInOut",
-      },
-    },
-  };
 
   return (
-    <section className="relative min-h-screen flex items-center px-4 overflow-hidden bg-gradient-to-br from-teal-50 via-cyan-50 to-blue-50 dark:from-black dark:via-gray-900 dark:to-black">
+    <section className="relative min-h-screen flex items-center px-4 overflow-hidden bg-gradient-to-br from-teal-50 via-cyan-50 to-blue-50 dark:bg-black dark:from-gray-900 dark:via-black dark:to-gray-800">
       {/* Modern neumorphism background */}
       <div className="absolute inset-0">
         {/* Soft gradient blobs */}
         <div className="absolute inset-0 overflow-hidden">
           <motion.div 
             style={{ y: y1, opacity }}
-            className="absolute top-1/4 -left-32 w-96 h-96 rounded-full bg-gradient-to-br from-teal-400/20 to-cyan-400/20 blur-3xl"
+            className="absolute top-1/4 -left-32 w-96 h-96 rounded-full bg-gradient-to-br from-teal-400/20 to-cyan-400/20 dark:from-teal-500/40 dark:to-cyan-500/40 blur-3xl"
             animate={{ 
               scale: [1, 1.1, 1],
               rotate: [0, 180, 360]
@@ -92,7 +81,7 @@ export default function Hero() {
           />
           <motion.div 
             style={{ y: y2, opacity }}
-            className="absolute bottom-1/4 -right-32 w-80 h-80 rounded-full bg-gradient-to-br from-cyan-400/15 to-blue-400/15 blur-3xl"
+            className="absolute bottom-1/4 -right-32 w-80 h-80 rounded-full bg-gradient-to-br from-cyan-400/15 to-blue-400/15 dark:from-cyan-500/35 dark:to-blue-500/35 blur-3xl"
             animate={{ 
               scale: [1.1, 1, 1.1],
               rotate: [360, 180, 0]

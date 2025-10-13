@@ -84,7 +84,7 @@ export default function About() {
             className="text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed text-balance"
             variants={itemVariants}
           >
-            I'm a Software Engineer and Freelance Developer who loves solving real-world problems with code. I turn ideas into smart, intuitive, and seamless digital experiences — from web applications and desktop tools to automated systems.
+            I&apos;m a Software Engineer and Freelance Developer who loves solving real-world problems with code. I turn ideas into smart, intuitive, and seamless digital experiences — from web applications and desktop tools to automated systems.
           </motion.p>
         </motion.div>
 
@@ -96,7 +96,7 @@ export default function About() {
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
         >
-          {values.map((value, index) => (
+          {values.map((value) => (
             <motion.div
               key={value.title}
               className="card p-8 hover-lift group"

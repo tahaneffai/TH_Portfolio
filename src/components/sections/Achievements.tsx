@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Award, Palette, Video, Smartphone, Instagram } from 'lucide-react';
+import { Palette, Video, Smartphone, Instagram } from 'lucide-react';
 import Section from '../ui/Section';
 
 const achievements = [
@@ -44,7 +44,7 @@ export default function Achievements() {
         {achievements.map((achievement, index) => (
           <motion.div
             key={achievement.title}
-            className="group relative overflow-hidden rounded-2xl bg-white/80 dark:bg-neutral-900/40 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-lg hover:shadow-xl transition-all duration-300"
+            className="group relative overflow-hidden rounded-2xl bg-white/80 dark:bg-black/60 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-lg hover:shadow-xl transition-all duration-300"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}

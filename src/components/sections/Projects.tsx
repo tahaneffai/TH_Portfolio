@@ -57,24 +57,6 @@ const projects: Project[] = [
     liveUrl: '#',
     githubUrl: '#',
   },
-  {
-    title: 'Cleaning Business Dashboard',
-    description:
-      'Interactive dashboard for cleaning business operations, scheduling, and client management.',
-    stack: ['React', 'Node.js', 'MongoDB', 'Chart.js'],
-    images: ['/projects/cleaning-dashboard.jpg'],
-    liveUrl: '#',
-    githubUrl: '#',
-  },
-  {
-    title: 'Learning Game – HTML Builder',
-    description:
-      'Educational game teaching HTML basics through interactive building challenges.',
-    stack: ['Unity', 'C#', 'WebGL'],
-    images: ['/projects/html-builder.jpg'],
-    liveUrl: '#',
-    githubUrl: '#',
-  },
 ];
 
 function ProjectCard({ project, index }: { project: Project; index: number }) {

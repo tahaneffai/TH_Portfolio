@@ -5,7 +5,17 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { Send, Github, Linkedin, Mail, MapPin, Clock, MessageCircle } from 'lucide-react';
 import Section from '../ui/Section';
 
-export default function Contact() {
+// Client-side EmailJS integration
+declare global {
+  interface Window {
+    emailjs: {
+      init: (publicKey: string) => void;
+      send: (serviceId: string, templateId: string, templateParams: Record<string, string>) => Promise<{ status: number }>;
+    };
+  }
+}
+
+export default function ContactClientSide() {
   const [formData, setFormData] = useState({
     from_name: '',
     from_email: '',
@@ -39,39 +49,40 @@ export default function Contact() {
     }
     
     try {
-      // Use client-side EmailJS integration
-      const emailjs = await import('@emailjs/browser');
-      
-      // Use hardcoded values as fallback if env vars are not loaded
-      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || 'service_30vllw4';
-      const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || 'template_zk1ndcf';
-      const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || 'gWm28yvsFBVTU38nc';
-      
-      // Initialize EmailJS with the public key
-      emailjs.init(publicKey);
-      
+      // Load EmailJS script if not already loaded
+      if (!window.emailjs) {
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
+        script.onload = () => {
+          window.emailjs.init(process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!);
+          sendEmail();
+        };
+        document.head.appendChild(script);
+      } else {
+        sendEmail();
+      }
+    } catch (error) {
+      console.error('Error loading EmailJS:', error);
+      setSubmitStatus('error');
+      setIsSubmitting(false);
+    }
+  };
+
+  const sendEmail = async () => {
+    try {
       const templateParams = {
         from_name: formData.from_name,
         from_email: formData.from_email,
         subject: formData.subject || 'New Contact Form Submission',
-        message: formData.message || 'No message provided',
+        message: formData.message,
         service_selected: formData.service_selected || 'Not specified'
       };
 
-      console.log('Sending email with params:', {
-        serviceId,
-        templateId,
-        publicKey,
-        templateParams
-      });
-
-      const result = await emailjs.send(
-        serviceId,
-        templateId,
+      const result = await window.emailjs.send(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
         templateParams
       );
-
-      console.log('EmailJS result:', result);
 
       if (result.status === 200) {
         setSubmitStatus('success');
@@ -384,7 +395,7 @@ export default function Contact() {
                 transition={{ duration: 0.2 }}
               >
                 <Mail className="h-5 w-5 group-hover:scale-110 transition-transform duration-300" />
-                <span>tahaneffai12@gmail.com</span>
+                <span>contact@tahaneffai.com</span>
               </motion.a>
               
               <motion.a 
