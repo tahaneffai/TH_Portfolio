@@ -64,6 +64,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
   const [isHovering, setIsHovering] = useState(false);
   const [isDemoOpen, setIsDemoOpen] = useState(false);
   const [demoError, setDemoError] = useState(false);
+  const [isVideoLoading, setIsVideoLoading] = useState(false);
 
   useEffect(() => {
     if (!isHovering || project.images.length <= 1) return;
@@ -72,6 +73,15 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
     }, 800);
     return () => clearInterval(interval);
   }, [isHovering, project.images.length]);
+
+  // Reset demo state when opening/closing
+  const handleDemoToggle = () => {
+    if (!isDemoOpen) {
+      setDemoError(false);
+      setIsVideoLoading(false);
+    }
+    setIsDemoOpen(!isDemoOpen);
+  };
 
   const currentSrc = project.images[hoverIndex] || project.images[0];
 
@@ -130,7 +140,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           {project.demo && (
             <motion.button
               type="button"
-              onClick={() => { setIsDemoOpen(true); setDemoError(false); }}
+              onClick={handleDemoToggle}
               className="btn btn-ghost btn-sm group"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -170,7 +180,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
               <h4 className="text-sm font-semibold">{project.title} Demo</h4>
               <button
                 className="p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800"
-                onClick={() => setIsDemoOpen(false)}
+                onClick={handleDemoToggle}
                 aria-label="Close demo"
               >
                 <X size={16} />
@@ -179,16 +189,39 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
             <div className="p-4">
               {project.demo.type === 'video' ? (
                 demoError ? (
-                  <p className="text-sm text-gray-600 dark:text-gray-300">
-                    Demo media not found. Add the video at <code>/public{project.demo.src}</code> or provide an embed link.
-                  </p>
+                  <div className="text-center py-8">
+                    <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+                      Demo video not available. This might be due to hosting limitations or file size restrictions.
+                    </p>
+                    <div className="space-y-2">
+                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                        Expected location: <code className="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-xs">{project.demo.src}</code>
+                      </p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                        Try refreshing the page or check your internet connection.
+                      </p>
+                    </div>
+                  </div>
                 ) : (
-                  <video
-                    src={project.demo.src}
-                    controls
-                    className="w-full h-auto rounded"
-                    onError={() => setDemoError(true)}
-                  />
+                  <div className="relative">
+                    {isVideoLoading && (
+                      <div className="absolute inset-0 flex items-center justify-center bg-gray-100 dark:bg-gray-800 rounded">
+                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                      </div>
+                    )}
+                    <video
+                      src={project.demo.src}
+                      controls
+                      className="w-full h-auto rounded"
+                      onLoadStart={() => setIsVideoLoading(true)}
+                      onCanPlay={() => setIsVideoLoading(false)}
+                      onError={() => {
+                        setDemoError(true);
+                        setIsVideoLoading(false);
+                      }}
+                      preload="metadata"
+                    />
+                  </div>
                 )
               ) : (
                 <div className="w-full" style={{ aspectRatio: '16/9' }}>
