@@ -18,24 +18,24 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Taha Neffati | Full Stack Developer",
+  title: "Taha Neffai | Full Stack Developer",
   description: "Portfolio website showcasing my projects, skills, and experience as a Full Stack Developer",
   keywords: ["developer", "portfolio", "full stack", "web development", "react", "next.js"],
-  authors: [{ name: "Taha Neffati" }],
-  creator: "Taha Neffati",
+  authors: [{ name: "Taha Neffai" }],
+  creator: "Taha Neffai",
   openGraph: {
-    title: "Taha Neffati | Full Stack Developer",
+    title: "Taha Neffai | Full Stack Developer",
     description: "Portfolio website showcasing my projects, skills, and experience as a Full Stack Developer",
-    url: "https://tahaneffati.com",
-    siteName: "Taha Neffati Portfolio",
+    url: "https://tahaneffai.com",
+    siteName: "Taha Neffai Portfolio",
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Taha Neffati | Full Stack Developer",
+    title: "Taha Neffai | Full Stack Developer",
     description: "Portfolio website showcasing my projects, skills, and experience",
-    creator: "@tahaneffati",
+    creator: "@tahaneffai",
   },
   robots: {
     index: true,
