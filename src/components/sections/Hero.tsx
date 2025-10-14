@@ -61,7 +61,7 @@ export default function Hero() {
 
 
   return (
-    <section className="relative min-h-screen flex items-center px-4 overflow-hidden bg-gradient-to-br from-teal-50 via-cyan-50 to-blue-50 dark:bg-black dark:from-gray-900 dark:via-black dark:to-gray-800">
+    <section className="relative min-h-screen flex items-center px-4 sm:px-6 lg:px-8 overflow-hidden bg-gradient-to-br from-teal-50 via-cyan-50 to-blue-50 dark:bg-black dark:from-gray-900 dark:via-black dark:to-gray-800">
       {/* Modern neumorphism background */}
       <div className="absolute inset-0">
         {/* Soft gradient blobs */}
@@ -96,17 +96,17 @@ export default function Hero() {
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center min-h-screen py-20 lg:py-0">
           {/* Left side - Text content */}
           <motion.div 
-            className="space-y-8"
+            className="space-y-6 sm:space-y-8 text-center lg:text-left"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
           >
             {/* Main heading with typing animation */}
             <motion.h1 
-              className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-gradient-primary tracking-tight"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-gradient-primary tracking-tight leading-tight"
               variants={itemVariants}
             >
               {displayText}
@@ -121,7 +121,7 @@ export default function Hero() {
 
             {/* Animated role text */}
             <motion.h2 
-              className="text-xl md:text-2xl lg:text-3xl xl:text-4xl font-medium text-slate-600 dark:text-white"
+              className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-medium text-slate-600 dark:text-white"
               variants={itemVariants}
             >
               <AnimatePresence mode="wait">
@@ -140,7 +140,7 @@ export default function Hero() {
 
             {/* Description */}
             <motion.p 
-              className="text-lg md:text-xl text-slate-600 dark:text-gray-200 leading-relaxed max-w-2xl"
+              className="text-base sm:text-lg md:text-xl text-slate-600 dark:text-gray-200 leading-relaxed max-w-2xl mx-auto lg:mx-0"
               variants={itemVariants}
             >
               My mission is to turn ideas into reality by developing high-quality software solutions to solve real-world problems. I believe in clean programming, elegant design, and continuous learning to stay ahead in the tech industry.
@@ -148,7 +148,7 @@ export default function Hero() {
 
             {/* CTA buttons */}
             <motion.div 
-              className="flex flex-col sm:flex-row gap-4"
+              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
               variants={itemVariants}
             >
               <motion.a
@@ -175,7 +175,7 @@ export default function Hero() {
 
           {/* Right side - 3D Avatar */}
           <motion.div
-            className="flex justify-center lg:justify-end"
+            className="flex justify-center lg:justify-end order-first lg:order-last"
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
@@ -194,7 +194,7 @@ export default function Hero() {
               
               {/* Avatar image */}
               <motion.div
-                className="relative w-96 h-96 md:w-[28rem] md:h-[28rem] lg:w-[32rem] lg:h-[32rem]"
+                className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[28rem] lg:h-[28rem] xl:w-[32rem] xl:h-[32rem]"
                 whileHover={{ 
                   scale: 1.05,
                 }}

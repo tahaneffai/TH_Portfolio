@@ -68,7 +68,7 @@ export default function Timeline() {
               
               {/* Avatar image */}
               <motion.div
-                className="relative w-72 h-[28rem] md:w-80 md:h-[32rem] lg:w-96 lg:h-[36rem] xl:w-[28rem] xl:h-[40rem]"
+                className="relative w-64 h-80 sm:w-72 sm:h-[28rem] md:w-80 md:h-[32rem] lg:w-96 lg:h-[36rem] xl:w-[28rem] xl:h-[40rem]"
                 whileHover={{ 
                   scale: 1.05,
                 }}

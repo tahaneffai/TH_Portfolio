@@ -2,10 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import ThemeToggle from './ThemeToggle';
-import { Home as HomeIcon, User, Wrench, Folder, Calendar, Trophy, Mail } from 'lucide-react';
+import { Home as HomeIcon, User, Wrench, Folder, Calendar, Trophy, Mail, Menu, X } from 'lucide-react';
 
 const navLinks = [
   { href: '#', label: 'Home', Icon: HomeIcon },
@@ -20,6 +20,7 @@ const navLinks = [
 export default function Navbar() {
   const [active, setActive] = useState('home');
   const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -126,7 +127,7 @@ export default function Navbar() {
         </nav>
 
         {/* Mobile Navigation */}
-        <div className="flex items-center md:hidden">
+        <div className="flex items-center gap-3 md:hidden">
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -134,8 +135,93 @@ export default function Navbar() {
           >
             <ThemeToggle />
           </motion.div>
+          
+          <motion.button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="p-2 rounded-xl bg-white/10 dark:bg-white/5 backdrop-blur-xl border border-white/20 hover:bg-white/20 transition-all duration-300"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            {mobileMenuOpen ? (
+              <X className="h-5 w-5 text-foreground" />
+            ) : (
+              <Menu className="h-5 w-5 text-foreground" />
+            )}
+          </motion.button>
         </div>
       </div>
+
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            className="fixed inset-0 z-40 md:hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            {/* Backdrop */}
+            <div 
+              className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+              onClick={() => setMobileMenuOpen(false)}
+            />
+            
+            {/* Menu Panel */}
+            <motion.div
+              className="absolute top-0 right-0 w-80 h-full bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border-l border-white/20 shadow-2xl"
+              initial={{ x: 320 }}
+              animate={{ x: 0 }}
+              exit={{ x: 320 }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+            >
+              <div className="p-6">
+                <div className="flex items-center justify-between mb-8">
+                  <h2 className="text-xl font-bold text-gradient-primary">Menu</h2>
+                  <button
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="p-2 rounded-xl bg-white/10 dark:bg-white/5 hover:bg-white/20 transition-all duration-300"
+                  >
+                    <X className="h-5 w-5 text-foreground" />
+                  </button>
+                </div>
+                
+                <nav className="space-y-2">
+                  {navLinks.map((link, index) => {
+                    const sectionKey = link.href === '#' ? 'home': link.href.slice(1);
+                    const isActive = active === sectionKey;
+                    return (
+                      <motion.div
+                        key={link.label}
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.1, duration: 0.3 }}
+                      >
+                        <Link
+                          href={link.href}
+                          className={cn(
+                            'flex items-center gap-3 px-4 py-3 rounded-2xl text-base font-medium transition-all duration-300',
+                            isActive
+                              ? 'text-white bg-gradient-to-r from-teal-500 to-cyan-500 shadow-lg'
+                              : 'text-foreground/80 hover:text-foreground hover:bg-white/10 dark:hover:bg-white/5'
+                          )}
+                          onClick={() => {
+                            setActive(sectionKey);
+                            setMobileMenuOpen(false);
+                          }}
+                        >
+                          {link.Icon && <link.Icon className="h-5 w-5" />}
+                          <span>{link.label}</span>
+                        </Link>
+                      </motion.div>
+                    );
+                  })}
+                </nav>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.header>
   );
 }

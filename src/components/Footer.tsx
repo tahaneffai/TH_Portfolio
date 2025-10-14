@@ -5,15 +5,15 @@ export default function Footer() {
   
   return (
     <footer className="bg-secondary/10 dark:bg-secondary/5 py-8">
-      <div className="max-w-7xl mx-auto px-4 md:px-8">
-        <div className="flex flex-col md:flex-row justify-between items-center">
-          <p className="text-sm text-gray-600 dark:text-gray-400">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+          <p className="text-sm text-gray-600 dark:text-gray-400 text-center sm:text-left">
             © {currentYear} — Taha Yassine Neffai
           </p>
-          <p className="text-sm text-gray-600 dark:text-gray-400 mt-2 md:mt-0">
+          <p className="text-sm text-gray-600 dark:text-gray-400 text-center sm:text-left">
             Built with Next.js, Tailwind, Framer Motion
           </p>
-          <div className="flex space-x-4 mt-4 md:mt-0">
+          <div className="flex space-x-4">
             <Link 
               href="https://github.com" 
               target="_blank" 
